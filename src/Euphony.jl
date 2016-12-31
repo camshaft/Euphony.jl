@@ -20,4 +20,7 @@ export Seq, HSeq, VSeq
 include("chord.jl")
 export Chord
 
+include("scale.jl")
+export Scale
+
 end
