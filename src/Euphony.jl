@@ -26,6 +26,6 @@ include("frequency.jl")
 export to_freq
 
 include("duration.jl")
-export to_second
+export Tempo, to_second
 
 end
