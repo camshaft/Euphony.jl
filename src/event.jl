@@ -1,18 +1,12 @@
-typealias PHM PersistentHashMap{Symbol, Any}
+typealias EventData Dict{Symbol, Any}
 
 immutable Event <: Sequencable
-  d :: PHM
+  d :: EventData
 end
 
-Event() = Event(PHM())
-Event(d::Associative) = Event(merge(PHM(), d))
-function Event(ps::Pair...)
-  acc = PHM()
-  for (k, v) in ps
-    acc = FunctionalCollections.assoc(acc, k, v)
-  end
-  Event(acc)
-end
+Event() = Event(EventData())
+Event(d::Associative) = Event(merge(EventData(), d))
+Event(ps::Pair...) = Event(EventData(ps...))
 
 @delegate Event.d [
   Base.get, Base.getindex, Base.haskey,
@@ -20,8 +14,8 @@ end
   Base.isempty, Base.length
 ]
 
-FunctionalCollections.assoc(e::Event, k, v) = Event(assoc(e.d, k, v))
-FunctionalCollections.dissoc(e::Event, k) = Event(dissoc(e.d, k))
+assoc(e::Event, k::Symbol, v::Any) = Event(setindex!(copy(e.d), v, k))
+dissoc(e::Event, k::Symbol) = Event(delete!(copy(e.d), k))
 
 Base.convert(::Type{Event}, p::Pair) = Event(p)
 Base.convert(::Type{Event}, p::Tuple) = Event([p])

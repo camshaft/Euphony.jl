@@ -3,16 +3,12 @@ module Euphony
 using Base
 import Base: <, <=, ==
 
-using FunctionalCollections
-import FunctionalCollections: assoc, dissoc
-export assoc, dissoc
-
 abstract Sequencable
 
 include("delegate.jl")
 
 include("event.jl")
-export Event
+export Event, assoc, dissoc
 
 include("sequence.jl")
 export Seq, HSeq, VSeq
