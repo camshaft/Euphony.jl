@@ -1,5 +1,6 @@
 using Euphony
 using Base.Test
 
-# write your own tests here
-@test 1 == 2
+include("event.test.jl")
+include("sequence.test.jl")
+include("chord.test.jl")
